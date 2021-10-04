@@ -26,10 +26,31 @@ const createRecipe = async (req, res) => {
     }
 }
 
+const updateRecipeById = async (req, res) => {
+    try {
+        let updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        });
+        res.json({ message: "success", updatedRecipe })
+    } catch (error) {
+        res.status(500).json({ message: "failure", error: error.message })
+    }
+}
+
+const deleteRecipeById = async (req, res) => {
+    try {
+        let deletedRecipe = await Recipe.findByIdAndDelete(req.params.id);
+        res.json({ message: "success", deletedRecipe })
+    } catch (error) {
+        res.status(500).json({ message: "failure", error: error.message })
+    }
+}
 
 module.exports = {
     fetchRecipe,
-    createRecipe
+    createRecipe,
+    updateRecipeById,
+    deleteRecipeById,
 };
 
 //using the current application
